@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
 
 module.exports.registerController = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, } = req.body;
 
   const existingUser = await userModel.findOne({ email });
   if (existingUser) {

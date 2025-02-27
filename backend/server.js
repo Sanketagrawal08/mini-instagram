@@ -13,11 +13,12 @@ app.use(cors({
 app.use(cookieParser());
 const connect = require("./src/db/db");
 const userRoutes = require("./src/routes/users.routes");
-
+const postRoutes = require("./src/routes/posts.routes")
 connect();
 
 // Routes
 app.use("/users", userRoutes);
+app.use("/posts", postRoutes)
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

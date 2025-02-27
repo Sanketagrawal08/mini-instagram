@@ -11,5 +11,4 @@ router.get("/userProfile", authMiddleware, async (req, res) => {
       res.status(500).json({ message: "Server Error" });
     }
   });
-  
-module.exports = router;
+module.exports = router
