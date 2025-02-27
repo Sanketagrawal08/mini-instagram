@@ -8,7 +8,7 @@ const Register = () => {
     password: "",
     profileImage: "",
   });
-  const [error,setError] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("")
+    setError("");
     try {
       const response = await axios.post(
         "http://localhost:3000/users/register",
@@ -34,19 +34,23 @@ const Register = () => {
 
       console.log(response.data);
     } catch (error) {
-      if(error.response) {
-        setError("User already exists with this email!")
-      }else{
+      if (error.response) {
+        setError("User already exists with this email!");
+      } else {
         setError("An unexpected error occurred.");
       }
-      console.log(error)
+      console.log(error);
     }
 
     setUser({ username: "", email: "", password: "", profileImage: "" });
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="w-full h-screen flex">
+    <div  className="w-1/2">
+      <img className="object-cover w-full h-full" src="https://images.unsplash.com/photo-1642480485642-63b9018eadc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+    </div>
+      <div className="w-1/2 flex items-center justify-center min-h-screen bg-gradient-to-b from-[#A3BEB7] via-[#9FBAB3] to-[#745745]">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-3xl font-bold text-center mb-6  text-pink-700">
           Instagram
@@ -100,6 +104,7 @@ const Register = () => {
           </NavLink>
         </p>
       </div>
+    </div>
     </div>
   );
 };

@@ -60,6 +60,6 @@ module.exports.loginController = async (req, res) => {
     },
     "auth-secret"
   );
-  res.status(200).json({ isExist, message: "login successfull" });
   res.cookie("token", token);
+  res.status(200).json({ isExist, message: "login successfull" });
 };
