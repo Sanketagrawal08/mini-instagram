@@ -27,7 +27,10 @@ const Login = () => {
       console.log(response.data);
       navigate("/profile");
     } catch (error) {
-      console.log(error);
+       if(error.message === "Request failed with status code 401"){
+        alert("incorrect password")
+       }
+      console.log(error.message);
     }
   };
   
