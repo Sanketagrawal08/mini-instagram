@@ -12,8 +12,8 @@ const PostModal = ({ isOpen, setIsOpen }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    
     setDetails({media:"",caption:""})
-
     try {
       const response = await axios.post(
         "http://localhost:3000/posts/create",
@@ -24,6 +24,12 @@ const PostModal = ({ isOpen, setIsOpen }) => {
     } catch (error) {
       console.log(error);
     }
+
+
+    setTimeout(() => {
+      setIsOpen(false)
+    }, 1000);
+
   };
 
   if (!isOpen) return null;

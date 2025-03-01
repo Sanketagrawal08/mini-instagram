@@ -24,14 +24,17 @@ const AppLayout = () => {
     return <p>Loading...</p>;
   }
 
-  return (
-    <div className="flex">
-      <Sidebar user={user} />
-      {/* sidebar me user jayega full for updating */}
-      <Outlet context={{ user }} />  
-      {/* outlet me components me user jayaega if needed  */}
-    </div>
-  );
+ 
+    return (
+      <div className="flex">
+        <Sidebar user={user} />
+        <div className="flex-1 overflow-auto ml-[20vw]">
+          <Outlet context={{ user }} />
+        </div>
+      </div>
+    );
+    
+
 };
 
 export default AppLayout;

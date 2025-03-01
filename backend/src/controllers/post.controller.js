@@ -12,11 +12,12 @@ module.exports.createPost = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-module.exports.getAll = async (req,res) => {
+
+module.exports.getAll = async (req, res) => {
   try {
-     const posts = await PostModel.find().populate("userId","username")
-     res.status(200).json(posts)
+    const posts = await PostModel.find().populate("userId", "username");
+    res.status(200).json(posts);
   } catch (error) {
-      console.log(error)
+    console.log(error);
   }
-}
+};

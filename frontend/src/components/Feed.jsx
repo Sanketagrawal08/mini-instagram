@@ -6,29 +6,31 @@ const Feed = () => {
   const [postData, setPostData] = useState([]);
   const [error, setError] = useState("");
 
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
           "http://localhost:3000/posts/getAllPosts"
         );
-
+        
         if (response.data.length === 0) {
           setPostData([]);
         } else {
           setPostData(response.data);
-        }
+        } 
       } catch (error) {
         setError("Unexpected Error Occurred");
       }
     };
     fetchPosts();
   }, []);
-
+  
+ 
   return (
     <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="text-center w-full">
-        <h1 className="text-3xl font-bold text-pink-800 underline mb-6">
+        <h1 className="text-3xl font-bold text-pink-800 mb-6 border-b-2 pb-2">
           All Posts
         </h1>
       </div>
@@ -49,9 +51,11 @@ const Feed = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
-                <h2 className="ml-3 font-semibold text-md">
-                  {item.userId?.username || "Unknown"}{" "}
-                </h2>
+                  <div>
+                    <h2 className="ml-3 font-semibold text-md">
+                      {item.userId?.username || "Unknown"}{" "}
+                    </h2>
+                  </div>
                   <svg
                     aria-label="Verified"
                     className="x1lliihq x1n2onr6"

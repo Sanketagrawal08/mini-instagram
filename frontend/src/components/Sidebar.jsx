@@ -4,29 +4,32 @@ import PostModal from "./PostModal";
 
 const Sidebar = ({ user = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log("ignore",user);
+    console.log("ignore", user);
   }, [user]);
   const firstLetter = user?.username?.slice(0, 1) || " ";
   return (
-    <div className="w-[20vw] h-screen bg-[#e7e9eb] text-black flex flex-col items-start px-6 py-4">
+    <div className="w-[20vw] fixed h-screen bg-[#e7e9eb] text-black flex flex-col items-start px-6 py-4">
       <div className="w-full flex justify-center border-b-2">
         <h2 className="text-2xl font-bold text-[#272928] mb-4">Instagram</h2>
       </div>
-
       {!user?.username ? (
         <h1>Loading...</h1>
       ) : (
         <>
-          <div className="flex items-center mt-4 mb-6 space-x-3">
-            <div className="bg-[#3c392a] text-[#fff] capitalize rounded-full w-8 h-8 flex items-center justify-center text-lg">
+          <div className="flex items-center mt-4 mb-8 space-x-3">
+            <div className="bg-[#3c392a] text-[#fff] capitalize rounded-full w-12 h-12 flex items-center justify-center text-lg">
               {firstLetter}
             </div>
-            <h2 className="text-lg font-semibold capitalize">
+          <div className="flex flex-col">
+          <h2 className="text-lg font-semibold capitalize">
               {user.username}
             </h2>
+            <h5 className="text-sm">{user.email}</h5>
           </div>
+          </div>
+          <div className="ml-2">
           <div className="flex items-center ml-1 gap-2 mb-4">
             <svg
               aria-label="Home"
@@ -46,11 +49,14 @@ const Sidebar = ({ user = {} }) => {
                 strokeWidth="2"
               ></path>
             </svg>
-            <p className="cursor-pointer"
-            onClick={()=>{
-              navigate("/profile")
-            }}
-             >Home</p>
+            <p
+              className="cursor-pointer"
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              Home
+            </p>
           </div>
           <div
             className="flex items-center ml-1 gap-2"
@@ -101,8 +107,42 @@ const Sidebar = ({ user = {} }) => {
             </svg>
             <p className="cursor-pointer">Create</p>
           </div>
-          <div>
-            <NavLink to="/feed">  Feed</NavLink>
+          <div className="flex gap-3 mt-4">
+            <svg
+              aria-label="Explore"
+              className="x1lliihq x1n2onr6 x5n08af ml-1"
+              fill="currentColor"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <title>Explore</title>
+              <polygon
+                fill="none"
+                points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              ></polygon>
+              <polygon
+                fillRule="evenodd"
+                points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"
+              ></polygon>
+              <circle
+                cx="12.001"
+                cy="12.005"
+                fill="none"
+                r="10.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              ></circle>
+            </svg>
+            <NavLink to="/feed"> Feed</NavLink>
+          </div>
           </div>
         </>
       )}
