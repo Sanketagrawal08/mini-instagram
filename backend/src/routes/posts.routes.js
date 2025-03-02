@@ -5,5 +5,6 @@ const router = express.Router()
 
 router.post("/create" , authMiddleware,postController.createPost)
 router.get("/getAllPosts",postController.getAll)
+router.get("/:id",postController.fetchByUserId)
 
 module.exports = router

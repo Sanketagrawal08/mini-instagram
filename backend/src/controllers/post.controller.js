@@ -21,3 +21,14 @@ module.exports.getAll = async (req, res) => {
     console.log(error);
   }
 };
+
+module.exports.fetchByUserId = async (req,res) => {
+     const userId = req.params.id
+    //  console.log(userId)
+    try {
+      const posts = await PostModel.find({userId})
+      res.status(200).json(posts)
+    } catch (error) {
+        console.log(error)
+    }
+}
