@@ -57,7 +57,7 @@ const Register = () => {
       <div className="w-1/2 flex items-center justify-center min-h-screen bg-gradient-to-b from-[#A1BCB5] via-[#9FBAB3] to-[#745745]">
         <div className="bg-white p-8 rounded-lg shadow-lg w-96">
           <h2 className="text-3xl font-bold text-center mb-6  text-pink-700">
-            Instagram
+            Postify
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

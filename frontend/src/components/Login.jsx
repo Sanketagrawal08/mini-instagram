@@ -35,9 +35,17 @@ const Login = () => {
   };
   
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-86">
-        <h1 className="text-3xl font-bold text-center mb-10 border-b-2 pb-4 border-gray-400">Instagram</h1>
+    <div className="flex w-full  h-screen bg-pink-400">
+      <div className="w-1/2 h-screen">
+        <img
+          className="object-cover w-full h-full"
+          src="https://images.unsplash.com/photo-1642480485642-63b9018eadc2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+        />
+      </div>
+     <div className="w-1/2 h-screen flex items-center justify-center bg-gradient-to-b from-[#A1BCB5] via-[#9FBAB3] to-[#745745]">
+     <div className=" bg-white p-8 rounded-lg shadow-md w-86">
+        <h1 className="text-3xl font-bold text-center mb-10 border-b-2 pb-4 border-gray-400">Postify</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -71,6 +79,7 @@ const Login = () => {
           </NavLink>
         </p>
       </div>
+     </div>
     </div>
   );
 };

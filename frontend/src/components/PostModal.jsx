@@ -82,5 +82,4 @@ const PostModal = ({ isOpen, setIsOpen }) => {
     </div>
   );
 };
-
 export default PostModal;
