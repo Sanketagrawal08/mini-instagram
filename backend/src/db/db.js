@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 function connect() {
   mongoose
-    .connect("mongodb://localhost:27017/insta")
+    .connect(
+      "mongodb+srv://sanketagrawal6969:3HQkaPT8fBOSvfGa@cluster0.3hign.mongodb.net/instaDB?retryWrites=true&w=majority&appName=Cluster0"
+    )
     .then(() => {
       console.log("db connected");
     })
