@@ -6,10 +6,10 @@ const UserPosts = () => {
   const [userPostData, setUserPostData] = useState([]);
 
   const { user } = useOutletContext();
-
+  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   const fetchUserPosts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/posts/${user._id}`);
+      const response = await axios.get(`${API_BASE_URL}/posts/${user._id}`);
       setUserPostData(response.data); 
     } catch (error) {
       console.log("Error fetching posts:", error);

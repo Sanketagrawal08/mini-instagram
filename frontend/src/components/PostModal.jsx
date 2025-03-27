@@ -9,14 +9,14 @@ const PostModal = ({ isOpen, setIsOpen }) => {
   const detailsHandler = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
-
+  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   const submitHandler = async (e) => {
     e.preventDefault();
     
     setDetails({media:"",caption:""})
     try {
       const response = await axios.post(
-        "http://localhost:3000/posts/create",
+        `${API_BASE_URL}/posts/create`,
         details,
         { withCredentials: true }
       );

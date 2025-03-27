@@ -3,6 +3,8 @@ import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -20,7 +22,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/login",
+        `${API_BASE_URL}/users/login`,
         user,
         { withCredentials: true }
       );

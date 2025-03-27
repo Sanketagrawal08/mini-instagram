@@ -6,10 +6,10 @@ import { Outlet } from "react-router-dom";
 const AppLayout = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users/userProfile", { withCredentials: true })
+      .get(`${API_BASE_URL}/users/userProfile`, { withCredentials: true })
       .then((res) => {
         setUser(res.data);
         setLoading(false);

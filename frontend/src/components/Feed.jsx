@@ -5,13 +5,13 @@ import Sidebar from "./Sidebar";
 const Feed = () => {
   const [postData, setPostData] = useState([]);
   const [error, setError] = useState("");
-
+  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/posts/getAllPosts"
+          `${API_BASE_URL}/posts/getAllPosts`
         );
         
         if (response.data.length === 0) {
