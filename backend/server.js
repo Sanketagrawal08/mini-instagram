@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: "https://mini-instagram.onrender.com",
+    origin: "https://mini-instagram-1-frotnend.onrender.com",
     credentials:true
 })); // Ab use karo
 
