@@ -32,6 +32,7 @@ module.exports.registerController = async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
+    maxAge: 24 * 60 * 60 * 1000
   });
 
   res.status(201).json({
@@ -67,6 +68,7 @@ module.exports.loginController = async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
+    maxAge: 24 * 60 * 60 * 1000
   });
 
   res.status(200).json({ isExist, message: "login successfull" });
