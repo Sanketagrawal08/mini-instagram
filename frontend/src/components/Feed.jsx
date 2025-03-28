@@ -5,28 +5,27 @@ import Sidebar from "./Sidebar";
 const Feed = () => {
   const [postData, setPostData] = useState([]);
   const [error, setError] = useState("");
-  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
-  
+  const API_BASE_URL = "https://mini-instagram.onrender.com";
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/posts/getAllPosts`
-        );
-        
+        const response = await axios.get(`${API_BASE_URL}/posts/getAllPosts`,{
+          withCredentials:true
+        });
+
         if (response.data.length === 0) {
           setPostData([]);
         } else {
           setPostData(response.data);
-        } 
+        }
       } catch (error) {
         setError("Unexpected Error Occurred");
       }
     };
     fetchPosts();
   }, []);
-  
- 
+
   return (
     <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="text-center w-full">

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
 
 module.exports.registerController = async (req, res) => {
-  const { username, email, password, } = req.body;
+  const { username, email, password } = req.body;
 
   const existingUser = await userModel.findOne({ email });
   if (existingUser) {
@@ -28,8 +28,11 @@ module.exports.registerController = async (req, res) => {
     },
     "auth-secret"
   );
-
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
 
   res.status(201).json({
     message: "User registered successfully!",
@@ -60,6 +63,11 @@ module.exports.loginController = async (req, res) => {
     },
     "auth-secret"
   );
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
+
   res.status(200).json({ isExist, message: "login successfull" });
 };
