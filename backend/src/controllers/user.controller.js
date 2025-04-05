@@ -31,9 +31,10 @@ module.exports.registerController = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
+    sameSite: "strict",
     maxAge: 24 * 60 * 60 * 1000
   });
+
 
   res.status(201).json({
     message: "User registered successfully!",
@@ -50,7 +51,6 @@ module.exports.loginController = async (req, res) => {
   if (!isExist) {
     return res.status(401).json({ message: "Invalid Credentials" });
   }
-
   const isPasswordValid = await bcrypt.compare(password, isExist.password);
 
   if (!isPasswordValid) {
@@ -67,9 +67,9 @@ module.exports.loginController = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
+    sameSite: "strict",
     maxAge: 24 * 60 * 60 * 1000
   });
 
-  res.status(200).json({ isExist, message: "login successfull" });
+  res.status(200).json({ isExist, message: "login successfull",token:token });
 };
