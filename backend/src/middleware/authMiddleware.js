@@ -3,12 +3,14 @@ const userModel = require("../model/userSchema");
 
 const authMiddleware = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(" ")[1];
     if (!token) {
+      console.log("no token provided")
       return res.status(401).json({ message: "Unauthorized, no token found" });
     }
 
-    const decoded = jwt.verify(token, "auth-secret");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET ||  "auth-secret");
 
     const user = await userModel.findById(decoded.id).select("-password");
     if (!user) {

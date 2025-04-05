@@ -32,9 +32,8 @@ module.exports.registerController = async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000,
   });
-
 
   res.status(201).json({
     message: "User registered successfully!",
@@ -45,10 +44,10 @@ module.exports.registerController = async (req, res) => {
 };
 module.exports.loginController = async (req, res) => {
   const { email, password } = req.body;
-
   const isExist = await userModel.findOne({ email });
 
   if (!isExist) {
+    console.log("User not found for email:", email)
     return res.status(401).json({ message: "Invalid Credentials" });
   }
   const isPasswordValid = await bcrypt.compare(password, isExist.password);
@@ -62,14 +61,14 @@ module.exports.loginController = async (req, res) => {
       id: isExist._id,
       email: isExist.email,
     },
-    "auth-secret"
+     process.env.JWT_SECRET ||  "auth-secret"
   );
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000,
   });
 
-  res.status(200).json({ isExist, message: "login successfull",token:token });
+  res.status(200).json({ isExist, message: "login successfull", token: token });
 };

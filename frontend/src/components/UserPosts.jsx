@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useOutletContext } from "react-router-dom";
+import api from "../api";
 
 const UserPosts = () => {
   const [userPostData, setUserPostData] = useState([]);
 
   const { user } = useOutletContext();
-  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
+
   const fetchUserPosts = async () => {
-    const token = localStorage.getItem("token")
     try {
-      const response = await axios.get(`${API_BASE_URL}/posts/${user._id}` , {
-        headers : {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setUserPostData(response.data); 
+      const response = await api(`/posts/${user._id}`);
+      setUserPostData(response.data);
     } catch (error) {
       console.log("Error fetching posts:", error);
     }

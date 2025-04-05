@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import api from "../api";
 const PostModal = ({ isOpen, setIsOpen }) => {
   const [details, setDetails] = useState({
     media: "",
@@ -16,15 +17,7 @@ const PostModal = ({ isOpen, setIsOpen }) => {
     setDetails({media:"",caption:""})
     try {
       const token = localStorage.getItem("token"); // Get token from localStorage
-      const response = await axios.post(
-        `${API_BASE_URL}/posts/create`,
-        details,
-        {
-          headers: {
-            Authorization: `Bearer ${token}` // Add token to headers
-          }
-        }
-      );
+      const response = await api.post("/posts/create",details)
       console.log(response.data);
     } catch (error) {
       console.log(error);

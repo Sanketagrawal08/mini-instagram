@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import api from "../api";
 
 const Feed = () => {
   const [postData, setPostData] = useState([]);
   const [error, setError] = useState("");
-  const API_BASE_URL = "https://mini-instagram.onrender.com";
-
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const token = localStorage.getItem("token"); // Get token from localStorage
-        const response = await axios.get(`${API_BASE_URL}/posts/getAllPosts`, {
-          headers: {
-            Authorization: `Bearer ${token}` // Add token to headers
-          }
-        });
+        const response = await api.get("/posts/getAllPosts");
         if (response.data.length === 0) {
           setPostData([]);
         } else {

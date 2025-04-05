@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import api from "../api";
 
-const API_BASE_URL = "https://mini-instagram.onrender.com";  // Replace with actual backend Render URL
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -25,11 +25,7 @@ const Register = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/users/register`,
-        user,
-        { withCredentials: true }
-      );
+      const response = await api.post("/users/register")
 
       if (response.data.success) {
         navigate("/profile");
