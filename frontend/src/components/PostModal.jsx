@@ -15,16 +15,20 @@ const PostModal = ({ isOpen, setIsOpen }) => {
     
     setDetails({media:"",caption:""})
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
       const response = await axios.post(
         `${API_BASE_URL}/posts/create`,
         details,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${token}` // Add token to headers
+          }
+        }
       );
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
-
 
     setTimeout(() => {
       setIsOpen(false)

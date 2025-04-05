@@ -8,8 +8,13 @@ const UserPosts = () => {
   const { user } = useOutletContext();
   const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   const fetchUserPosts = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const response = await axios.get(`${API_BASE_URL}/posts/${user._id}`);
+      const response = await axios.get(`${API_BASE_URL}/posts/${user._id}` , {
+        headers : {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setUserPostData(response.data); 
     } catch (error) {
       console.log("Error fetching posts:", error);

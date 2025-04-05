@@ -8,16 +8,22 @@ const AppLayout = () => {
   const [loading, setLoading] = useState(true);
   const API_BASE_URL = "https://mini-instagram.onrender.com"; 
   useEffect(() => {
-    axios
-      .get(`${API_BASE_URL}/users/userProfile`, { withCredentials: true })
-      .then((res) => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Get token from localStorage
+        const res = await axios.get(`${API_BASE_URL}/users/userProfile`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Add token to headers
+          }
+        });
         setUser(res.data);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
         setLoading(false);
-      });
+      }
+    };
+    fetchUserProfile();
   }, []);
 
   if (loading) {

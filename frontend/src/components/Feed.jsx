@@ -10,10 +10,12 @@ const Feed = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/posts/getAllPosts`,{
-          withCredentials:true
+        const token = localStorage.getItem("token"); // Get token from localStorage
+        const response = await axios.get(`${API_BASE_URL}/posts/getAllPosts`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Add token to headers
+          }
         });
-
         if (response.data.length === 0) {
           setPostData([]);
         } else {

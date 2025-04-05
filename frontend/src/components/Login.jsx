@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { data, NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -26,7 +26,10 @@ const Login = () => {
         user,
         { withCredentials: true }
       );
-      console.log(response.data);
+     const { token } = response.data
+     if(token){
+      localStorage.setItem("token",token)
+     }
       navigate("/profile");
     } catch (error) {
        if(error.message === "Request failed with status code 401"){
