@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["https://mini-insta-frontend.onrender.com", "http://localhost:5173"], // Add your local frontend URL
+    origin: ["https://chat-frontned.vercel.app", "http://localhost:5173"], // Add your local frontend URL
     credentials: true, // Allow cookies if needed
   })
 );
