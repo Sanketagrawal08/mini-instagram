@@ -11,8 +11,8 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const [isLogging,setIsLogging] = useState(false)
-  if(isLogging) return <Loader/>
 
+  
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -38,6 +38,7 @@ const Login = () => {
       console.log(error.message);
     }
   };
+
 
   return (
     <div className="flex w-full items-center justify-center h-screen bg-gradient-to-b from-[#A1BCB5] via-[#9FBAB3] to-[#745745]">
@@ -68,8 +69,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
+              
             >
-              Log In
+              {isLogging ? " logging " : "Log In"}
             </button>
           </form>
           <p className="mt-4 text-center text-sm">

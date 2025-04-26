@@ -47,7 +47,7 @@ module.exports.loginController = async (req, res) => {
   const isExist = await userModel.findOne({ email });
 
   if (!isExist) {
-    console.log("User not found for email:", email)
+    console.log("User not found for email:", email);
     return res.status(401).json({ message: "Invalid Credentials" });
   }
   const isPasswordValid = await bcrypt.compare(password, isExist.password);
@@ -61,7 +61,7 @@ module.exports.loginController = async (req, res) => {
       id: isExist._id,
       email: isExist.email,
     },
-     process.env.JWT_SECRET ||  "auth-secret"
+    process.env.JWT_SECRET || "auth-secret"
   );
   res.cookie("token", token, {
     httpOnly: true,
@@ -71,4 +71,10 @@ module.exports.loginController = async (req, res) => {
   });
 
   res.status(200).json({ isExist, message: "login successfull", token: token });
+};
+
+module.exports.getAllUsers = async (req, res) => {
+  const users = await userModel.find();
+  console.log(users);
+  res.status(200).json({ message: "All Users", users });
 };

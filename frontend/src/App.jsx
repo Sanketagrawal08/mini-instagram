@@ -5,6 +5,9 @@ import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
 import AppLayout from "./components/AppLayout";
+import Loader from "./components/Loader";
+import Message from '../src/components/Message'
+import UserProfile from "./components/UserProfile";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -26,11 +29,19 @@ const routes = createBrowserRouter([
         path: "/feed",
         element: <Feed />,
       },
+      {
+        path:"/message",
+        element: <Message />
+      },{
+        path:"/user-profile",
+        element:<UserProfile/>
+      }
     ]
   }
 ]);
 
 const App = () => {
   return <RouterProvider router={routes} />;
+ 
 };
 export default App;

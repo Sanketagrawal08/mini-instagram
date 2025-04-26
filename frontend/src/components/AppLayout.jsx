@@ -24,7 +24,6 @@ const AppLayout = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-
  
     return (
       <div className="flex">

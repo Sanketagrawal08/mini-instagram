@@ -11,4 +11,5 @@ router.get("/userProfile", authMiddleware, async (req, res) => {
       res.status(500).json({ message: "Server Error" });
     }
   });
+router.get("/getallusers",userController.getAllUsers )
 module.exports = router
