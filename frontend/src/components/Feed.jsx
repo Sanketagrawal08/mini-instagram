@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
 import api from "../api";
+import { useOutletContext } from "react-router-dom";
 
 const Feed = () => {
+  const { user } = useOutletContext();
+  console.log(user);
   const [postData, setPostData] = useState([]);
   const [error, setError] = useState("");
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const token = localStorage.getItem("token"); // Get token from localStorage
-        const response = await api.get("/posts/getAllPosts");
+        const response = await api.get(`/posts/getAllPosts?userId=${user._id}`);
         if (response.data.length === 0) {
           setPostData([]);
         } else {
@@ -23,6 +26,10 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
+  const likeClickFunction = async (post) => {
+    await api.post("/posts/like", { userId: user._id, postId: post._id });
+  };
+ 
   return (
     <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="text-center w-full">
@@ -75,6 +82,14 @@ const Feed = () => {
                   alt="Post"
                 />
               )}
+              <div className="flex border-b-1">
+                <i
+                  className="ri-heart-line p-2"
+                  onClick={() => {
+                    likeClickFunction(item);
+                  }}
+                ></i>
+              </div>
               <div className="p-4">
                 <p className="text-gray-700 text-sm">
                   {item.caption || "No caption provided"}

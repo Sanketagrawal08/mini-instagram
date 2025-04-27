@@ -14,6 +14,8 @@ module.exports.createPost = async (req, res) => {
 };
 
 module.exports.getAll = async (req, res) => {
+  const {userId} = req.query
+  
   try {
     const posts = await PostModel.find().populate("userId", "username");
     res.status(200).json(posts);

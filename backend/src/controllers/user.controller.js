@@ -78,3 +78,7 @@ module.exports.getAllUsers = async (req, res) => {
   console.log(users);
   res.status(200).json({ message: "All Users", users });
 };
+module.exports.updateController = async (req,res) => {
+    const { ImageUrl } = req.body;
+    console.log(ImageUrl)
+} 
