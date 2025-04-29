@@ -1,4 +1,5 @@
 const PostModel = require("../model/post.model");
+const LikeModel = require("../model/like.model")
 
 module.exports.createPost = async (req, res) => {
   try {
@@ -14,14 +15,31 @@ module.exports.createPost = async (req, res) => {
 };
 
 module.exports.getAll = async (req, res) => {
-  const {userId} = req.query
+  const allPosts = await PostModel.find().populate("userId");
+
+
+
+  const postsWithLikeStatus = await Promise.all(
+    allPosts.map(async (post) => {
+
+      const likeCount = await LikeModel.countDocuments({postId : post._id})
+
+      const isLiked = await LikeModel.findOne({
+        postId: post._id,
+        userId: req.query.userId, 
+        
+      });
   
-  try {
-    const posts = await PostModel.find().populate("userId", "username");
-    res.status(200).json(posts);
-  } catch (error) {
-    console.log(error);
-  }
+      return {
+        ...post._doc,
+        likedByCurrentUser: !!isLiked,
+        likeCount:likeCount
+      };
+    })
+  );
+  console.log(postsWithLikeStatus)
+  res.status(200).json(postsWithLikeStatus);
+  
 };
 
 module.exports.fetchByUserId = async (req,res) => {

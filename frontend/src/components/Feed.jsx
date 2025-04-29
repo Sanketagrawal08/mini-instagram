@@ -3,6 +3,7 @@ import axios from "axios";
 import Sidebar from "./Sidebar";
 import api from "../api";
 import { useOutletContext } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Feed = () => {
   const { user } = useOutletContext();
@@ -12,8 +13,9 @@ const Feed = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const token = localStorage.getItem("token"); // Get token from localStorage
+        const token = localStorage.getItem("token");
         const response = await api.get(`/posts/getAllPosts?userId=${user._id}`);
+        console.log(response.data);
         if (response.data.length === 0) {
           setPostData([]);
         } else {
@@ -21,15 +23,40 @@ const Feed = () => {
         }
       } catch (error) {
         setError("Unexpected Error Occurred");
+        toast.error("Unexpected Error Occurred");
       }
     };
     fetchPosts();
   }, []);
 
+  
   const likeClickFunction = async (post) => {
-    await api.post("/posts/like", { userId: user._id, postId: post._id });
+    try {
+      const updatedPosts = postData.map((item) =>
+        item._id === post._id
+          ? { ...item, likedByCurrentUser: !item.likedByCurrentUser }
+          : item
+      );
+      setPostData(updatedPosts);
+
+      const res = await api.post("/posts/like", {
+        userId: user._id,
+        postId: post._id,
+      });
+
+    } catch (error) {
+  
+      const updatedPosts = postData.map((item) =>
+        item._id === post._id
+          ? { ...item, likedByCurrentUser: !item.likedByCurrentUser }
+          : item
+      );
+      setPostData(updatedPosts);
+
+      toast.error("Error liking the post");
+    }
   };
- 
+
   return (
     <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="text-center w-full">
@@ -84,11 +111,16 @@ const Feed = () => {
               )}
               <div className="flex border-b-1">
                 <i
-                  className="ri-heart-line p-2"
+                  className={`p-2 ${
+                    item.likedByCurrentUser
+                      ? "ri-heart-fill text-red-500"
+                      : "ri-heart-line"
+                  }`}
                   onClick={() => {
                     likeClickFunction(item);
                   }}
                 ></i>
+                <h1> {item.likeCount} Likes</h1>
               </div>
               <div className="p-4">
                 <p className="text-gray-700 text-sm">

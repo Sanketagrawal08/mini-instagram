@@ -3,7 +3,7 @@ import axios from "axios";
 import { data, NavLink, useNavigate } from "react-router-dom";
 import api from "../api";
 import Loader from "./Loader";
-
+import toast from 'react-hot-toast';
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -30,6 +30,7 @@ const Login = () => {
         localStorage.setItem("token", token);
       }
       navigate("/profile");
+      toast.success("Login Successfull")
     } catch (error) {
       if (error.message === "Request failed with status code 401") {
         alert("incorrect password");

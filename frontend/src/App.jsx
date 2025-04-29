@@ -8,6 +8,7 @@ import AppLayout from "./components/AppLayout";
 import Loader from "./components/Loader";
 import Message from '../src/components/Message'
 import UserProfile from "./components/UserProfile";
+import { Toaster } from "react-hot-toast";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +42,12 @@ const routes = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={routes} />;
- 
+  return (
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
+      <RouterProvider router={routes} />
+    </>
+  );
 };
+
 export default App;
