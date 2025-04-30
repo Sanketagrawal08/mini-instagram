@@ -82,3 +82,7 @@ module.exports.updateController = async (req,res) => {
     const { ImageUrl } = req.body;
     console.log(ImageUrl)
 } 
+
+module.exports.followUser = async (req,res) => {
+  //follow logic here
+}

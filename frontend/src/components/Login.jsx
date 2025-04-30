@@ -4,40 +4,26 @@ import { data, NavLink, useNavigate } from "react-router-dom";
 import api from "../api";
 import Loader from "./Loader";
 import toast from 'react-hot-toast';
+import useAuthStore from "../store/useAuthStore";
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
-  const [isLogging,setIsLogging] = useState(false)
 
+  const {loginUser} = useAuthStore();
   
   const handleChange = (e) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
-  };
-
+  }; 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await api.post("/users/login", { email: user.email, password: user.password });
-      const { token } = res.data;
-      setIsLogging(true)
-      if (token) {
-        localStorage.setItem("token", token);
-      }
-      navigate("/profile");
-      toast.success("Login Successfull")
-    } catch (error) {
-      if (error.message === "Request failed with status code 401") {
-        alert("incorrect password");
-        setIsLogging(false)
-      }
-      console.log(error.message);
-    }
+    loginUser(navigate,user.email,user.password);
   };
 
 
@@ -72,7 +58,7 @@ const Login = () => {
               className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
               
             >
-              {isLogging ? " logging " : "Log In"}
+              Log In
             </button>
           </form>
           <p className="mt-4 text-center text-sm">

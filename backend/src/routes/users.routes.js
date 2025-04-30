@@ -13,4 +13,5 @@ router.get("/userProfile", authMiddleware, async (req, res) => {
 });
 router.get("/getallusers", userController.getAllUsers);
 router.put("/update-profile", userController.updateController);
+router.post("/:id/follow", authMiddleware, userController.followUser)
 module.exports = router;

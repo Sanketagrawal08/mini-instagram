@@ -22,15 +22,7 @@ const Sidebar = ({ user = {} }) => {
       ) : (
         <>
           <div className="flex items-center mt-4 mb-8 space-x-3">
-            <div className="bg-[#3c392a] text-[#fff] capitalize rounded-full w-12 h-12 flex items-center justify-center text-lg">
-              {firstLetter}
-            </div>
-            <div className="flex flex-col">
-              <h2 className="text-lg font-semibold capitalize">
-                {user.username}
-              </h2>
-              <h5 className="text-sm">{user.email}</h5>
-            </div>
+           
           </div>
           <div className="ml-2">
             <div className="flex items-center ml-1 gap-2 mb-4">
@@ -154,6 +146,18 @@ const Sidebar = ({ user = {} }) => {
              <PersonOutlineIcon/>
               <NavLink to="/user-profile" > Profile </NavLink>
             </div>
+
+           <div className="flex fixed bottom-0 gap-4 text-white left-0 py-4 px-4 bg-neutral-800 w-[20vw]">
+           <div className="bg-[#414d63] text-[#ffffff] capitalize rounded-full w-12 h-12 flex items-center justify-center text-lg">
+              {firstLetter}
+            </div>
+            <div className="flex flex-col">
+              <h2 className="text-lg font-semibold capitalize">
+                {user.username}
+              </h2>
+              <h5 className="text-sm">{user.email}</h5>
+            </div>
+           </div>
           </div>
         </>
       )}
