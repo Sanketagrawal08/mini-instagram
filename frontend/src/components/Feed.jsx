@@ -55,10 +55,21 @@ const Feed = () => {
   };
 
   const handlefollow = async (item) => {
-    const userIdToFollow = item.userId._id
-    
-  }
+    const userIdToFollow = item.userId._id;
+    const response = await api.post(`/users/${userIdToFollow}/follow`,
+      {currentLoggedInuserId: user._id,},
+      { withCredentials: true }
+    );
+  };
 
+  const handleUnfollow = async (item) => {
+    const userIdToUnFollow = item.userId._id;
+    const response = await api.post(`/users/${userIdToUnFollow}/unfollow`,
+      {currentLoggedInuserId: user._id,},
+      { withCredentials: true }
+    );
+  }
+ 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-50 py-10 px-4 sm:px-10">
       <h1 className="text-4xl font-extrabold text-pink-700 mb-10 border-b-1 border-pink-800 pb-3 text-center w-full max-w-4xl">
@@ -80,7 +91,6 @@ const Feed = () => {
                   {item.userId?.username?.[0]?.toUpperCase() || "U"}
                 </div>
                 <div className="flex justify-between items-center w-full">
-           
                   <div className="flex items-center gap-1">
                     <h2 className="text-md font-semibold text-gray-800">
                       {item.userId?.username || "Unknown"}
@@ -97,13 +107,13 @@ const Feed = () => {
                     </svg>
                   </div>
 
-                 
                   <div className="">
-                    <h1 className="font-small bg-pink-600 text-white rounded p-1 cursor-pointer"
-                    onClick={()=>{
-                      handlefollow(item)
-                    }}
-                     >
+                    <h1
+                      className="font-small bg-pink-600 text-white rounded p-1 cursor-pointer"
+                      onClick={() => {
+                        handlefollow(item);
+                      }}
+                    >
                       Follow
                     </h1>
                   </div>

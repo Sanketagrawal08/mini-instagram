@@ -24,6 +24,15 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  getFollowers: async (userId) => {
+    try{
+       const res = await api.get(`/users/${userId}/getfollower`);
+       return res.data;
+    }catch(err){
+        console.log(err)
+        toast.error("Error in fetching followers")
+    }
+  } 
   
 }));
 
