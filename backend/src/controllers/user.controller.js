@@ -139,9 +139,16 @@ module.exports.UnfollowUser = async (req, res) => {
 module.exports.getFollower = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await userModel.findById(userId).populate("followers","username email");
+    const user = await userModel
+      .findById(userId)
+      .populate("followers", "username email");
     if (!user) return res.status(404).json("User not found");
-    res.status(200).json({message:"Followers",followers:user.followers});
+    const followerCount = user.followers.length;
+    res.status(200).json({
+        message: "Followers",
+        followers: user.followers,
+        followerCount: followerCount,
+      });
   } catch (error) {
     res.status(500).json("Server error");
   }
@@ -149,9 +156,12 @@ module.exports.getFollower = async (req, res) => {
 module.exports.getFollowing = async (req, res) => {
   try {
     // const user = await User.findById(req.params.id).populate("following", "username email profilePhoto");
-    const user = await userModel.findById(req.params.id).populate("following","username email");
+    const user = await userModel
+      .findById(req.params.id)
+      .populate("following", "username email");
     if (!user) return res.status(404).json("User not found");
-    res.status(200).json(user.following);
+    const followingCount = user.following.length;
+    res.status(200).json({message:"following",following:user.following,followingCount:followingCount});
   } catch (err) {
     res.status(500).json("Server error");
   }

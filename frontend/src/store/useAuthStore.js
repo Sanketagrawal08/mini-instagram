@@ -32,8 +32,16 @@ const useAuthStore = create((set) => ({
         console.log(err)
         toast.error("Error in fetching followers")
     }
+  },
+  getFollowing: async (userId) => {
+    try{
+      const res = await api.get(`/users/${userId}/getfollowing`);
+      return res.data
+    }catch(err){
+      console.log(err)
+      toast.error("Something went wrong")
+    }
   } 
-  
 }));
 
 export default useAuthStore;
