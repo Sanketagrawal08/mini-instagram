@@ -109,11 +109,13 @@ module.exports.followUser = async (req, res) => {
 };
 
 module.exports.UnfollowUser = async (req, res) => {
+  
+
   try {
     const currentUser = await userModel.findById(
       req.body.currentLoggedInuserId
     );
-    const userToUnfollow = await User.findById(req.params.id);
+    const userToUnfollow = await userModel.findById(req.params.id);
 
     if (!userToUnfollow || !currentUser) {
       return res.status(404).json("User not found");
@@ -155,7 +157,7 @@ module.exports.getFollower = async (req, res) => {
 };
 module.exports.getFollowing = async (req, res) => {
   try {
-    // const user = await User.findById(req.params.id).populate("following", "username email profilePhoto");
+   
     const user = await userModel
       .findById(req.params.id)
       .populate("following", "username email");

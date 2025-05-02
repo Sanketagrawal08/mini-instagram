@@ -1,41 +1,26 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import UserPosts from "./UserPosts";
 import useAuthStore from "../store/useAuthStore";
 import toast from "react-hot-toast";
 
 const Profile = () => {
-  const [userStats, setUserStats] = useState({
-    followers: [],
-    followerCount: 0,
-    following: [],
-    followingCount: 0
-  });
+  
   const { user } = useOutletContext();
-  const { getFollowers, getFollowing } = useAuthStore();
+  const { getFollowers, getFollowing , fetchUserStats,followerCount,followingCount} = useAuthStore();
 
   useEffect(() => {
-    const fetchUserStats = async () => {
+    const fetchUserStatss = async () => {
       try {
         if (user?._id) {
-          const followerData = await getFollowers(user._id);
-        
-          const followingData = await getFollowing(user._id);
-
-          setUserStats({
-            followers: followerData.followers,
-            followerCount: followerData.followerCount,
-            following: followingData.following,
-            followingCount: followingData.followingCount
-          });
+          fetchUserStats(user._id)
         }
       } catch (err) {
         console.error("Error fetching user stats:", err);
         toast.error("Something went wrong!");
       }
     };
-
-    fetchUserStats();
+    fetchUserStatss();
   }, [user, getFollowers, getFollowing]);
 
   return (
@@ -47,18 +32,19 @@ const Profile = () => {
     <div className="flex flex-col">
       <div className="flex items-center gap-2">
         <h1 className="text-2xl font-semibold">{user.username}</h1>
+        <Link to={"/user-profile"}>
         <button className="py-1 px-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none">
           Edit Profile
         </button>
+        </Link>
       </div>
       <div className="flex gap-6 mt-2">
-        <h1 className="">{userStats.followerCount} followers</h1>
-        <h1 className="">{userStats.followingCount} following</h1>
+        <h1 className="">{followerCount} followers</h1>
+        <h1 className="">{followingCount} following</h1>
       </div>
     </div>
   </div>
   
-  {/* UserPosts Section */}
   <div className="mt-6">
     <UserPosts />
   </div>
