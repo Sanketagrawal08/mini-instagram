@@ -7,21 +7,7 @@ import toast from "react-hot-toast";
 const Profile = () => {
   
   const { user } = useOutletContext();
-  const { getFollowers, getFollowing , fetchUserStats,followerCount,followingCount} = useAuthStore();
 
-  useEffect(() => {
-    const fetchUserStatss = async () => {
-      try {
-        if (user?._id) {
-          fetchUserStats(user._id)
-        }
-      } catch (err) {
-        console.error("Error fetching user stats:", err);
-        toast.error("Something went wrong!");
-      }
-    };
-    fetchUserStatss();
-  }, [user, getFollowers, getFollowing]);
 
   return (
 <div className="flex flex-col p-6 bg-white rounded-lg shadow-md items-center">
@@ -37,10 +23,6 @@ const Profile = () => {
           Edit Profile
         </button>
         </Link>
-      </div>
-      <div className="flex gap-6 mt-2">
-        <h1 className="">{followerCount} followers</h1>
-        <h1 className="">{followingCount} following</h1>
       </div>
     </div>
   </div>

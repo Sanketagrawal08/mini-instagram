@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Sidebar from "./Sidebar";
 import api from "../api";
 import { useOutletContext } from "react-router-dom";
@@ -8,20 +7,28 @@ import useAuthStore from "../store/useAuthStore";
 
 const Feed = () => {
   const { user } = useOutletContext();
-  const { followersData } = useAuthStore();
+  const store = useAuthStore();
+  
+
   const [postData, setPostData] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         const response = await api.get(`/posts/getAllPosts?userId=${user._id}`);
         setPostData(response.data || []);
       } catch (error) {
-        setError("Unexpected Error Occurred");
-        toast.error("Unexpected Error Occurred");
+        const msg = error?.response?.data?.message || "Unexpected Error Occurred";
+        setError(msg);
+        toast.error(msg);
+      } finally {
+        setLoading(false);
       }
     };
+
     if (user?._id) fetchPosts();
   }, [user?._id]);
 
@@ -46,34 +53,22 @@ const Feed = () => {
       });
     } catch (error) {
       toast.error("Error liking the post");
+      setPostData((prev) =>
+        prev.map((item) =>
+          item._id === post._id
+            ? {
+                ...item,
+                likedByCurrentUser: post.likedByCurrentUser,
+                likeCount: post.likedByCurrentUser
+                  ? post.likeCount + 1
+                  : post.likeCount - 1,
+              }
+            : item
+        )
+      );
     }
   };
 
-  const handlefollow = async (item) => {
-    try {
-      const userIdToFollow = item.userId._id;
-      await api.post(
-        `/users/${userIdToFollow}/follow`,
-        { currentLoggedInuserId: user._id },
-        { withCredentials: true }
-      );
-    } catch (err) {
-      toast.error("Follow failed");
-    }
-  };
-
-  const handleUnfollow = async (item) => {
-    try {
-      const userIdToUnfollow = item.userId._id;
-      await api.post(
-        `/users/${userIdToUnfollow}/unfollow`,
-        { currentLoggedInuserId: user._id },
-        { withCredentials: true }
-      );
-    } catch (err) {
-      toast.error("Unfollow failed");
-    }
-  };
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-50 py-10 px-4 sm:px-10">
@@ -81,49 +76,43 @@ const Feed = () => {
         Latest Posts
       </h1>
 
-      {error ? (
+      {loading ? (
+        <p className="text-gray-500 text-lg mt-10">Loading posts...</p>
+      ) : error ? (
         <p className="text-red-600 text-xl font-medium">{error}</p>
       ) : postData.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
-          {postData.map((item, index) => {
+          {postData.map((item) => {
+           
+
             return (
               <div
-                key={index}
+                key={item._id}
                 className="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300"
               >
-                {/* Header */}
+                {/* Post Header */}
                 <div className="flex items-center p-4 gap-3 border-b">
                   <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white bg-gradient-to-br from-pink-500 to-purple-500">
                     {item.userId?.username?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <div className="flex justify-between items-center w-full">
-                    <div className="flex items-center gap-1">
-                      <h2 className="text-md font-semibold text-gray-800">
-                        {item.userId?.username || "Unknown"}
-                      </h2>
-                      <svg
-                        aria-label="Verified"
-                        fill="rgb(0, 149, 246)"
-                        height="14"
-                        role="img"
-                        viewBox="0 0 40 40"
-                        width="14"
-                      >
-                        <path d="M19.998 3.094..." />
-                      </svg>
-                    </div>
-
-                    <h1
-                      className="font-small bg-pink-600 text-white rounded p-1 cursor-pointer"
-                      onClick={() =>
-                        isFollowing ? handleUnfollow(item) : handlefollow(item)
-                      }
+                  <div className="flex items-center gap-1">
+                    <h2 className="text-md font-semibold text-gray-800">
+                      {item.userId?.username || "Unknown"}
+                    </h2>
+                    <svg
+                      aria-label="Verified"
+                      fill="rgb(0, 149, 246)"
+                      height="14"
+                      role="img"
+                      viewBox="0 0 40 40"
+                      width="14"
                     >
-                      Follow
-                    </h1>
+                      <path d="M19.998 3.094..." />
+                    </svg>
                   </div>
                 </div>
 
+                {/* Post Media */}
                 {item.media && (
                   <img
                     src={item.media}
@@ -132,7 +121,7 @@ const Feed = () => {
                   />
                 )}
 
-                {/* Like Section */}
+                {/* Post Likes */}
                 <div className="flex items-center gap-3 px-4 py-2 border-t">
                   <i
                     className={`text-2xl cursor-pointer transition-all duration-200 ${
@@ -146,8 +135,6 @@ const Feed = () => {
                     {item.likeCount} Likes
                   </span>
                 </div>
-
-                {/* Caption */}
                 <div className="px-4 pb-4 text-sm text-gray-700">
                   {item.caption || "No caption provided"}
                 </div>
