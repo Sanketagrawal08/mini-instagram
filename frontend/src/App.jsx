@@ -9,6 +9,7 @@ import Loader from "./components/Loader";
 import Message from '../src/components/Message'
 import UserProfile from "./components/UserProfile";
 import { Toaster } from "react-hot-toast";
+
 const routes = createBrowserRouter([
   {
     path: "/",

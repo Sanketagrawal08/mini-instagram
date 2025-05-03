@@ -10,7 +10,7 @@ const PostModal = ({ isOpen, setIsOpen }) => {
   const detailsHandler = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
-  const API_BASE_URL = "https://mini-instagram.onrender.com"; 
+
   const submitHandler = async (e) => {
     e.preventDefault();
     

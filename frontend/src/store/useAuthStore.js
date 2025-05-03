@@ -11,8 +11,6 @@ const useAuthStore = create((set) => ({
       if (token) {
         localStorage.setItem("token", token);
       }
-      const userId = res.data.isExist._id;
-      await useAuthStore.getState().fetchUserStats(userId);
       navigate("/profile");
       toast.success("Login Successfull");
     } catch (error) {
@@ -24,7 +22,5 @@ const useAuthStore = create((set) => ({
       set({ isLogging: false });
     }
   },
-
 }));
-
 export default useAuthStore;

@@ -44,7 +44,6 @@ module.exports.registerController = async (req, res) => {
   });
 };
 
-
 module.exports.loginController = async (req, res) => {
   const { email, password } = req.body;
   const isExist = await userModel.findOne({ email });
@@ -76,7 +75,6 @@ module.exports.loginController = async (req, res) => {
   res.status(200).json({ isExist, message: "login successfull", token: token });
 };
 
-
 module.exports.getAllUsers = async (req, res) => {
   const users = await userModel.find();
   console.log(users);
@@ -85,4 +83,4 @@ module.exports.getAllUsers = async (req, res) => {
 module.exports.updateController = async (req, res) => {
   const { ImageUrl } = req.body;
   console.log(ImageUrl);
-};
+}
