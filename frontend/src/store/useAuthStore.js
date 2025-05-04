@@ -2,7 +2,9 @@ import { create } from "zustand";
 import api from "../api";
 import { toast } from "react-hot-toast";
 const useAuthStore = create((set) => ({
+  user:null,
   isLogging: false,
+  setUser: (user) => set({ user }),
   loginUser: async (navigate, email, password) => {
     try {
       const res = await api.post("/users/login", { email, password });
@@ -22,5 +24,6 @@ const useAuthStore = create((set) => ({
       set({ isLogging: false });
     }
   },
+
 }));
 export default useAuthStore;
