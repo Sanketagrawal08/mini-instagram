@@ -11,6 +11,7 @@ import AppLayout from "./components/AppLayout";
 import Loader from "./components/Loader";
 import UserProfile from "./components/UserProfile";
 import { Toaster } from "react-hot-toast";
+import UsersForChat from "./components/UsersForChat";
 
 const routes = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const routes = createBrowserRouter([
       {
         path: "/feed",
         element: <Feed />,
+      },
+      {
+        path:"/message",
+        element: <UsersForChat/>
       },
       {
         path: "/user-profile",
