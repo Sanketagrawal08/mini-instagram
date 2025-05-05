@@ -1,8 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { app, server, io } = require("./src/socket/socket");
-
+const app = express()
 const cookieParser = require("cookie-parser");
 app.use(express.json());
 
@@ -18,14 +17,12 @@ app.use(cookieParser());
 const connect = require("./src/db/db");
 const userRoutes = require("./src/routes/users.routes");
 const postRoutes = require("./src/routes/posts.routes");
-const messageRoutes = require("./src/routes/message.route");
 connect();
 
 // Routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
-app.use("/message", messageRoutes);
 
-server.listen(3000, () => {
+app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
