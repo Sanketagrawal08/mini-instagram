@@ -72,7 +72,7 @@ module.exports.loginController = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  res.status(200).json({ isExist, message: "login successfull", token: token });
+  res.status(200).json({ user:isExist, message: "login successfull", token: token });
 };
 
 module.exports.getAllUsers = async (req, res) => {

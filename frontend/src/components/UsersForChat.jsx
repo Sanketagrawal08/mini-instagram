@@ -38,7 +38,7 @@ const UsersForChat = () => {
         </ul>
       </div>
 
-      {/* Chat Area */}
+     
       <div className="flex-1">
         {selectedUser ? <ChatContainer /> : <NoChatSelected />}
       </div>
