@@ -12,21 +12,21 @@ const ChatContainer = () => {
     getMessages,
     sendMessage,
     susbcribeForMessage,
-    unsubscribeForMessages
+    unsubscribeForMessages,
   } = useChatStore();
-  
+
   const [text, setText] = useState("");
-  const { user,onlineUsers } = useAuthStore();
+  const { user, onlineUsers } = useAuthStore();
 
   if (!selectedUser) {
     return <NoChatSelected />;
   }
   useEffect(() => {
     getMessages(selectedUser._id);
-    susbcribeForMessage()
+    susbcribeForMessage();
 
-    return () => unsubscribeForMessages()
-  }, [selectedUser._id, getMessages,sendMessage]);
+    return () => unsubscribeForMessages();
+  }, [selectedUser._id, getMessages, sendMessage]);
   if (isMessagesLoading) {
     return (
       <div className="flex justify-center items-center w-[55vw] h-full">
@@ -50,20 +50,26 @@ const ChatContainer = () => {
   };
   return (
     <div className="flex-1 flex flex-col h-full bg-white">
-      {/* Header */}
+      
       <ChatHeader />
 
-      {/* Messages Section */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-        {/* Example Messages */}
-        {messages.map((message) => (
-          <div key={message._id}>
-            <h1>{message.text}</h1>
-          </div>
-        ))}
+     
+        {messages.map((message) => {
+          const isSenderMe = message.senderId === user._id;
+
+          return (
+            <div
+              key={message._id}
+              className={`chat ${isSenderMe ? "chat-end" : "chat-start"}`}
+            >
+              <div className="chat-bubble">{message.text}</div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Fixed Input Section */}
+  
       <form
         className="sticky bottom-0 bg-white p-4 border-t flex items-center gap-2"
         onSubmit={sendMessageHandler}

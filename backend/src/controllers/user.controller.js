@@ -76,6 +76,7 @@ module.exports.loginController = async (req, res) => {
 };
 
 module.exports.getAllUsers = async (req, res) => {
+ 
   const users = await userModel.find();
   console.log(users);
   res.status(200).json({ message: "All Users", users });
